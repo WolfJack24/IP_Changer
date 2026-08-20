@@ -2,17 +2,9 @@
 
 namespace IP_Changer.Services
 {
-    public class ProfileService
+    public class ProfileService(ProfileStore store, NetworkService network)
     {
-        private readonly ProfileStore _store;
-        private readonly NetworkService _network;
-
-        public ProfileService(
-            ProfileStore store,
-            NetworkService network)
-        {
-            _store = store;
-            _network = network;
-        }
+        private readonly ProfileStore _store = store;
+        private readonly NetworkService _network = network;
     }
 }
