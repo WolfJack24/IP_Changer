@@ -1,4 +1,8 @@
-﻿using Spectre.Console.Cli;
+﻿using IP_Changer.Enums;
+using IP_Changer.Models;
+using IP_Changer.Services;
+using Spectre.Console;
+using Spectre.Console.Cli;
 using System.ComponentModel;
 
 namespace IP_Changer.Commands
@@ -14,7 +18,92 @@ namespace IP_Changer.Commands
 
         protected override int Execute(CommandContext context, Settings settings, CancellationToken cancellationToken)
         {
-            Console.WriteLine($"TODO: Create a new profile with the name '{settings.ProfileName}'");
+            AnsiConsole.MarkupLine($"Creating a profile with the name: [blue]{settings.ProfileName}[/]\n");
+
+            var adapters = AdapterService.GetAdapters();
+            var choices = adapters.Select(a => Markup.Escape(a.Name)).ToList();
+
+            var adapterName = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title("[green]What adapter would you like to configure?[/]")
+                    .AddChoices(choices)
+            );
+
+            var adapter = AdapterService.GetAdapter(adapterName);
+
+            AnsiConsole.MarkupLine($"Modifying: [blue]{adapterName}[/]");
+
+            var networkMode = AnsiConsole.Prompt(
+                new SelectionPrompt<NetworkMode>()
+                    .Title("[green]What mode are you configuring?[/]")
+                    .AddChoices(NetworkMode.DHCP, NetworkMode.Static)
+            );
+
+            AnsiConsole.MarkupLine($"Network Mode: [blue]{networkMode}[/]\n");
+
+            string Ip = string.Empty;
+            var Ips = new Dictionary<int, string>();
+            string Subnet = string.Empty;
+            var Subnets = new Dictionary<int, string>();
+            string Gateway = string.Empty;
+            string PriDns = string.Empty;
+            string SecDns = string.Empty;
+
+            switch (networkMode)
+            {
+                case NetworkMode.DHCP:
+                    {
+                        // Apply and save DHCP Profile
+                        break;
+                    }
+                case NetworkMode.Static:
+                    {
+                        if (AnsiConsole.Confirm("Will there be multiple IPs?"))
+                        {
+                            var numOfIp = AnsiConsole.Ask<int>("How many?");
+                        }
+                        else
+                        {
+                            AnsiConsole.WriteLine();
+
+                            Ip = AnsiConsole.Ask<string>("IP:");
+                            Subnet = AnsiConsole.Ask<string>("Subnet:");
+                            Gateway = AnsiConsole.Ask<string>("Gateway:");
+
+                            Ips.Add(0, Ip);
+                            Subnets.Add(0, Subnet);
+
+                            AnsiConsole.WriteLine();
+
+                            if (AnsiConsole.Confirm("Set DNS automatically?"))
+                            {
+                                PriDns = Gateway; // TODO: do better
+                            }
+                            else
+                            {
+                                AnsiConsole.WriteLine();
+
+                                PriDns = AnsiConsole.Ask<string>("Primary DNS:");
+                                SecDns = AnsiConsole.Ask<string>("Secondary DNS:");
+                            }
+                        }
+                        break;
+                    }
+            }
+
+            var Profile = new NetworkProfile()
+            {
+                Name = settings.ProfileName,
+                Adapter = adapter,
+                Mode = networkMode,
+                IpAddress = Ips,
+                SubnetMask = Subnets,
+                Gateway = Gateway,
+                DnsServers = [PriDns, SecDns]
+            };
+
+            // Save Profile
+
             return 0;
         }
     }
