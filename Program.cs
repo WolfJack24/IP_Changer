@@ -23,8 +23,16 @@ namespace IP_Changer
                 config.AddCommand<ApplyCommand>("apply").WithDescription("Apply a profile");
                 config.AddBranch("list", list =>
                 {
+                    list.SetDescription("TODO: Add list description");
                     list.AddCommand<ListProfilesCommand>("profiles").WithDescription("List all profiles");
-                    list.AddCommand<ListAdaptersCommand>("adapters").WithDescription("List all adapters");
+                    list.AddCommand<ListAdaptersCommand>("adapters")
+                        .WithDescription("List all adapters").WithData(adapterService);
+                });
+                config.AddBranch("select", select =>
+                {
+                    select.SetDescription("TODO: Add select description");
+                    select.AddCommand<SelectApdaterCommand>("adapter")
+                        .WithDescription("Selects the adpater to configure").WithData(adapterService);
                 });
             });
 
