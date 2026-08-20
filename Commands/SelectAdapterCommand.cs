@@ -12,21 +12,19 @@ namespace IP_Changer.Commands
 
         protected override int Execute(CommandContext context, Settings settings, CancellationToken cancellationToken)
         {
-            if (context.Data is AdapterService)
-            {
-                var adapters = AdapterService.GetAdapters();
-                var choices = adapters.Select(a => Markup.Escape(a.Name)).ToList();
+            var adapters = AdapterService.GetAdapters();
+            var choices = adapters.Select(a => Markup.Escape(a.Name)).ToList();
 
-                var adapterName = AnsiConsole.Prompt(
-                    new SelectionPrompt<string>()
-                        .Title("[blue]What adapter would you like to configure?[/]")
-                        .AddChoices(choices)
-                );
+            var adapterName = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title("[blue]What adapter would you like to configure?[/]")
+                    .AddChoices(choices)
+            );
 
-                var adapter = AdapterService.GetAdapter(adapterName);
+            var adapter = AdapterService.GetAdapter(adapterName);
 
-                AnsiConsole.MarkupLine($"You have selected the adapter with the name [blue]{adapterName}[/]");
-            }
+            AnsiConsole.MarkupLine($"You have selected the adapter with the name [blue]{adapterName}[/]");
+
             return 0;
         }
     }

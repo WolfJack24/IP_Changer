@@ -15,6 +15,8 @@ namespace IP_Changer
 
             var profileService = new ProfileService(profileStore, networkService);
 
+            OnLoad.CheckLocations();
+
             var app = new CommandApp();
             app.Configure(config =>
             {
@@ -25,15 +27,14 @@ namespace IP_Changer
                 {
                     list.SetDescription("TODO: Add list description");
                     list.AddCommand<ListProfilesCommand>("profiles").WithDescription("List all profiles");
-                    list.AddCommand<ListAdaptersCommand>("adapters")
-                        .WithDescription("List all adapters").WithData(adapterService);
+                    list.AddCommand<ListAdaptersCommand>("adapters").WithDescription("List all adapters");
                 });
-                config.AddBranch("select", select =>
-                {
-                    select.SetDescription("TODO: Add select description");
-                    select.AddCommand<SelectApdaterCommand>("adapter")
-                        .WithDescription("Selects the adpater to configure").WithData(adapterService);
-                });
+                //config.AddBranch("select", select =>
+                //{
+                //    select.SetDescription("TODO: Add select description");
+                //    select.AddCommand<SelectApdaterCommand>("adapter")
+                //        .WithDescription("Selects the adpater to configure").WithData(adapterService);
+                //});
             });
 
             return app.Run(args);
