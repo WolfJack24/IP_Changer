@@ -1,6 +1,7 @@
 ﻿using IP_Changer.Commands;
 using IP_Changer.Services;
 using IP_Changer.Storage;
+using Spectre.Console;
 using Spectre.Console.Cli;
 
 namespace IP_Changer
@@ -16,11 +17,16 @@ namespace IP_Changer
             var profileService = new ProfileService(profileStore, networkService);
 
             OnLoad.CheckLocations();
+            (profileStore.profiles, bool ok) = profileStore.Load();
+
+            if (ok) AnsiConsole.MarkupLine("[green]Loaded Profiles[/]");
+            else AnsiConsole.MarkupLine($"[blue]No profiles or '{Locations.profileLocation}' is missing[/]");
 
             var app = new CommandApp();
             app.Configure(config =>
             {
-                config.AddCommand<CreateCommand>("create").WithDescription("Create a new profile");
+                config.AddCommand<CreateCommand>("create")
+                    .WithDescription("Create a new profile").WithData(profileStore);
                 config.AddCommand<DeleteCommand>("delete").WithDescription("Delete an existing profile");
                 config.AddCommand<ApplyCommand>("apply").WithDescription("Apply a profile");
                 config.AddBranch("list", list =>
