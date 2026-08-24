@@ -19,14 +19,14 @@ namespace IP_Changer
             OnLoad.CheckLocations();
             (profileStore.profiles, bool ok) = profileStore.Load();
 
-            if (ok) AnsiConsole.MarkupLine("[green]Loaded Profiles[/]");
-            else AnsiConsole.MarkupLine($"[blue]No profiles or '{Locations.profileLocation}' is missing[/]");
+            if (ok) AnsiConsole.MarkupLine("[green]Loaded Profiles![/]");
+            else AnsiConsole.MarkupLine("[blue]No profiles have been made yet.[/]");
 
             var app = new CommandApp();
             app.Configure(config =>
             {
                 config.AddCommand<CreateCommand>("create")
-                    .WithDescription("Create a new profile").WithData(profileStore);
+                    .WithDescription("Create a new profile").WithData(profileService);
                 config.AddCommand<DeleteCommand>("delete").WithDescription("Delete an existing profile");
                 config.AddCommand<ApplyCommand>("apply").WithDescription("Apply a profile");
                 config.AddBranch("list", list =>
