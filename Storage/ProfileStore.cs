@@ -1,6 +1,6 @@
-﻿using IP_Changer.Models;
+﻿using System.Text.Json;
+using IP_Changer.Models;
 using Spectre.Console;
-using System.Text.Json;
 
 namespace IP_Changer.Storage
 {
