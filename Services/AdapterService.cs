@@ -1,6 +1,6 @@
-﻿using IP_Changer.Models;
-using System.Management;
+﻿using System.Management;
 using System.Net.NetworkInformation;
+using IP_Changer.Models;
 
 // *INFO: This is only a windows platform for now (Maybe add Linux and Mac support later (Not garanteed))
 #pragma warning disable CA1416 // Validate platform compatibility
