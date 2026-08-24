@@ -35,12 +35,6 @@ namespace IP_Changer
                     list.AddCommand<ListProfilesCommand>("profiles").WithDescription("List all profiles");
                     list.AddCommand<ListAdaptersCommand>("adapters").WithDescription("List all adapters");
                 });
-                //config.AddBranch("select", select =>
-                //{
-                //    select.SetDescription("TODO: Add select description");
-                //    select.AddCommand<SelectApdaterCommand>("adapter")
-                //        .WithDescription("Selects the adpater to configure").WithData(adapterService);
-                //});
             });
 
             return app.Run(args);
