@@ -10,8 +10,8 @@ namespace IP_Changer.Models
 
         public NetworkMode Mode { get; set; }
 
-        public Dictionary<int, string>? IpAddress { get; set; }
-        public Dictionary<int, string>? SubnetMask { get; set; }
+        public List<string>? IpAddress { get; set; }
+        public List<string>? SubnetMask { get; set; }
         public string Gateway { get; set; } = string.Empty;
 
         public List<string> DnsServers { get; set; } = [];
