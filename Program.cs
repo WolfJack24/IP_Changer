@@ -17,11 +17,7 @@ namespace IP_Changer
             var profileService = new ProfileService(profileStore, networkService);
 
             OnLoad.CheckLocations();
-            (profileStore.profiles, bool ok) = profileStore.Load();
-
-            if (ok) AnsiConsole.MarkupLine("[green]Loaded Profiles![/]");
-            else AnsiConsole.MarkupLine("[blue]No profiles have been made yet.[/]");
-            AnsiConsole.WriteLine();
+            profileService.LoadProfiles();
 
             var app = new CommandApp();
             app.Configure(config =>
