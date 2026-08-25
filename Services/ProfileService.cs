@@ -10,6 +10,13 @@ namespace IP_Changer.Services
         private readonly ProfileStore _store = store;
         private readonly NetworkService _network = network;
 
+        public List<NetworkProfile> LoadProfiles()
+        {
+            (_store.profiles, bool ok) = _store.Load();
+
+            return _store.profiles;
+        }
+
         public bool SaveProfile(NetworkProfile profile)
         {
             return _store.Save(profile);
