@@ -21,6 +21,44 @@ namespace IP_Changer.Services
         {
             return _store.Save(profile);
         }
+
+        private static string AskSubnetMask(string prompt)
+        {
+            string mask;
+
+            var typeOfMask = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title("Subnet Masks")
+                    .AddChoices([
+                        "Class A",
+                        "Class B",
+                        "Class C"
+                    ])
+            );
+
+            switch (typeOfMask)
+            {
+                case "Class A":
+                    {
+                        mask = "255.0.0.0";
+                        break;
+                    }
+                case "Class B":
+                    {
+                        mask = "255.255.0.0";
+                        break;
+                    }
+                case "Class C":
+                    {
+                        mask = "255.255.255.0";
+                        break;
+                    }
+                default: throw new Exception("Impossible Code Reached!");
+            }
+
+            AnsiConsole.WriteLine(prompt + mask);
+
+            return mask;
         }
 
         public NetworkProfile CreateStaticProfile(
@@ -36,7 +74,7 @@ namespace IP_Changer.Services
             for (int i = 0; i < numOfIps; i++)
             {
                 ips.Add(AnsiConsole.Ask<string>($"IP {i + 1}:"));
-                subnets.Add(AnsiConsole.Ask<string>($"Subnet {i + 1}:"));
+                subnets.Add(AskSubnetMask($"Subnet {i + 1}: "));
             }
 
             var gateway = AnsiConsole.Ask<string>("Gateway: ");
