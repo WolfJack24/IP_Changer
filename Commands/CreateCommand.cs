@@ -62,8 +62,9 @@ namespace IP_Changer.Commands
                             AnsiConsole.Status()
                                 .Start("Saving Profile...", ctx =>
                                 {
-                                    profileService.SaveProfile(profile);
-                                    AnsiConsole.MarkupLine("[green]Profile saved![/]");
+                                    var saved = profileService.SaveProfile(profile);
+                                    if (saved) AnsiConsole.MarkupLine("[green]Profile saved![/]");
+                                    else AnsiConsole.MarkupLine("[red]Profile failed to save![/]");
                                 });
                         }
                         break;
@@ -86,8 +87,9 @@ namespace IP_Changer.Commands
                             AnsiConsole.Status()
                                 .Start("Saving Profile...", ctx =>
                                 {
-                                    profileService.SaveProfile(profile);
-                                    AnsiConsole.MarkupLine("[green]Profile saved![/]");
+                                    var saved = profileService.SaveProfile(profile);
+                                    if (saved) AnsiConsole.MarkupLine("[green]Profile saved![/]");
+                                    else AnsiConsole.MarkupLine("[red]Profile failed to save![/]");
                                 });
                         }
                         break;

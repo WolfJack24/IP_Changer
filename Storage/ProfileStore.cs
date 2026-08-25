@@ -27,16 +27,17 @@ namespace IP_Changer.Storage
             }
         }
 
-        public void Save(NetworkProfile profile)
+        public bool Save(NetworkProfile profile)
         {
             if (profiles.Any(p => p.Name.Equals(profile.Name, StringComparison.OrdinalIgnoreCase)))
             {
                 AnsiConsole.MarkupLine($"[red]You already have a profile with the name of [blue]{profile.Name}[/][/]");
-                return;
+                return false;
             }
 
             profiles.Add(profile);
             File.WriteAllText(Locations.profileLocation, JsonSerializer.Serialize(profiles, options));
+            return true;
         }
     }
 }

@@ -10,9 +10,10 @@ namespace IP_Changer.Services
         private readonly ProfileStore _store = store;
         private readonly NetworkService _network = network;
 
-        public void SaveProfile(NetworkProfile profile)
+        public bool SaveProfile(NetworkProfile profile)
         {
-            _store.Save(profile);
+            return _store.Save(profile);
+        }
         }
 
         public NetworkProfile CreateStaticProfile(
