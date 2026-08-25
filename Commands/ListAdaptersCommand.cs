@@ -15,6 +15,8 @@ namespace IP_Changer.Commands
             var adapters = AdapterService.GetAdapters();
 
             var table = new Table().RoundedBorder();
+            table.Title("Adapters");
+
             table.AddColumn("Name");
             table.AddColumn("Description");
             table.AddColumn("IsPhysical");
