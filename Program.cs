@@ -21,6 +21,7 @@ namespace IP_Changer
 
             if (ok) AnsiConsole.MarkupLine("[green]Loaded Profiles![/]");
             else AnsiConsole.MarkupLine("[blue]No profiles have been made yet.[/]");
+            AnsiConsole.WriteLine();
 
             var app = new CommandApp();
             app.Configure(config =>
@@ -32,7 +33,8 @@ namespace IP_Changer
                 config.AddBranch("list", list =>
                 {
                     list.SetDescription("TODO: Add list description");
-                    list.AddCommand<ListProfilesCommand>("profiles").WithDescription("List all profiles");
+                    list.AddCommand<ListProfilesCommand>("profiles")
+                        .WithDescription("List all profiles").WithData(profileService);
                     list.AddCommand<ListAdaptersCommand>("adapters").WithDescription("List all adapters");
                 });
             });
