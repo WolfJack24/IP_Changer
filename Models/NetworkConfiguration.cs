@@ -4,12 +4,12 @@ namespace IP_Changer.Models
 {
     public class NetworkConfiguration
     {
-        public string Adapter { get; set; } = string.Empty;
+        public NetworkAdapter? Adapter { get; set; }
 
         public NetworkMode Mode { get; set; }
 
-        public string? IpAddress { get; set; }
-        public string? SubnetMask { get; set; }
+        public List<string>? IpAddress { get; set; }
+        public List<string>? SubnetMask { get; set; }
         public string? Gateway { get; set; }
 
         public List<string> DnsServers { get; set; } = [];
