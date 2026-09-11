@@ -82,7 +82,6 @@ namespace IP_Changer.Commands
                                     adapter,
                                     networkMode,
                                     numOfIp);
-                            profileService.SaveProfile(profile);
 
                             AnsiConsole.Status()
                                 .Start("Saving Profile...", ctx =>
