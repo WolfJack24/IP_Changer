@@ -42,14 +42,6 @@ namespace IP_Changer.Commands
 
                 AnsiConsole.MarkupLine($"Network Mode: [blue]{networkMode}[/]\n");
 
-                string Ip = string.Empty;
-                var Ips = new Dictionary<int, string>();
-                string Subnet = string.Empty;
-                var Subnets = new Dictionary<int, string>();
-                string Gateway = string.Empty;
-                string PriDns = string.Empty;
-                string SecDns = string.Empty;
-
                 switch (networkMode)
                 {
                     case NetworkMode.DHCP:
